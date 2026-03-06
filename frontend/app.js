@@ -120,7 +120,7 @@ function getInjectedProviderOrThrow() {
 
 // --- NEW AUTH AND STATE MANAGEMENT ---
 
-const API_BASE_URL = "http://localhost:4000/api";
+const API_BASE_URL = "https://cdk-launchpad.onrender.com/api";
 
 // DOM Elements
 const showAuthModalBtn = document.getElementById("show-auth-modal-btn");

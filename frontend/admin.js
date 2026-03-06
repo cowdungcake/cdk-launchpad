@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function apiFetch(endpoint, options = {}) {
         const bases = [
             `${window.location.origin}/api`,
-            `http://localhost:4000/api`,
+            `https://cdk-launchpad.onrender.com/api`,
             `http://localhost:5000/api`,
         ];
 
