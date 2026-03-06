@@ -756,6 +756,15 @@ app.get("/api/admin/ad-analytics", authMiddleware, requireAdmin, async (_req, re
 });
 
 const port = process.env.PORT || 4000;
+app.get("/api/db-test", async (req, res) => {
+  try {
+    const result = await db.query("SELECT NOW()");
+    res.json({ ok: true, time: result.rows[0] });
+  } catch (err) {
+    console.error("DB TEST ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 app.listen(port, () => {
   console.log(`API server listening on port ${port}`);
   // #region agent log
