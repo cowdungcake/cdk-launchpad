@@ -11,6 +11,10 @@ const db = require("./db");
 const crypto = require("crypto");
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("CDK Launchpad API is running 🚀");
+});
+
 const tokenPageViews = new Map();
 
 app.use(express.json());
