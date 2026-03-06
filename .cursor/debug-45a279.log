@@ -1,0 +1,17 @@
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"server-start","location":"server.js:listen","message":"Server listening","data":{"port":"4000"},"timestamp":1772728764804}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728777520}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-error","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics error","data":{"errorName":"error","errorMessage":"column \"created_at\" does not exist"},"timestamp":1772728777566}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728830280}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-error","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics error","data":{"errorName":"error","errorMessage":"column \"created_at\" does not exist"},"timestamp":1772728830301}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"server-start","location":"server.js:listen","message":"Server listening","data":{"port":"4000"},"timestamp":1772728839201}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728840797}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728857409}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728872166}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772728894107}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"server-start","location":"server.js:listen","message":"Server listening","data":{"port":"4000"},"timestamp":1772729112692}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772729121061}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772729125007}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772729130615}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772729190541}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"server-start","location":"server.js:listen","message":"Server listening","data":{"port":"4000"},"timestamp":1772729867471}
+{"sessionId":"45a279","runId":"pre-fix","hypothesisId":"ad-analytics-entry","location":"server.js:/api/admin/ad-analytics","message":"Ad analytics route hit","data":{},"timestamp":1772730021319}

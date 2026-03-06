@@ -1,0 +1,8 @@
+"id","email","password_hash","email_verified","is_admin","referral_code","referred_by","wallet_address","created_at","last_login"
+1,"akhil3216@gmail.com","$2a$10$NlxCsrKO9A/8uabFvOQdI.wxQVpADqOr5RkAONuPROl0sr20wbC26",False,False,"35DAEB1C",NULL,NULL,"2026-03-05 15:28:15.01077+05:30","2026-03-05 16:08:07.933576+05:30"
+2,"test@gmail.com","$2a$10$exrEry1D1PG.CXxSO8jeFuZ5B2sm/ZsKEr5go/.Ucms3kz9zGp8wS",False,False,"E687E867",1,NULL,"2026-03-05 16:00:29.727371+05:30","2026-03-05 16:05:34.363479+05:30"
+3,"munna@munna.com","$2a$10$cSzF4ZhZXrzR/OcNsRAYmeFzfr/EjiMCJQK2Di2S0t2jH01kUrXsq",False,False,"BD85C0A8",1,NULL,"2026-03-05 16:07:29.546853+05:30","2026-03-05 16:07:39.755306+05:30"
+4,"munna@gmail.com","$2a$10$Kuf8xCW5wSt2Rnd8I9Oy1OABPIGbgyK5KLfPCGcvhKn.cqLuXCJHW",False,False,"5BD0055A",1,NULL,"2026-03-05 16:08:35.302852+05:30",NULL
+5,"keshav@keshav.com","$2a$10$ZDTPaMMPC7YDRGWOJpZPBOZUqASA8D76k/iWx0IAJY5JrYIjSBiom",False,False,"9068513A",NULL,NULL,"2026-03-05 16:11:25.16099+05:30",NULL
+6,"Ankita.Singh@gmail.com","$2a$10$krbue/AwI5ol6Eq1ObG0U.NGjJlJ5968xekKAkwamUDlcHn4alvKS",False,False,"599E6C81",NULL,NULL,"2026-03-05 16:34:07.599086+05:30",NULL
+7,"Priya.arora@gmail.com","$2a$10$PKMb/cfHq4.fsjdk41WNre72ZyWP3BB.HLulCX3WbUTmVWzC0ba1y",False,False,"DBAA3F38",NULL,NULL,"2026-03-05 16:47:32.004766+05:30",NULL

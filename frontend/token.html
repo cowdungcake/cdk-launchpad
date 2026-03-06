@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REPLACE_WITH_PUBLISHER_ID" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="min-h-screen bg-slate-950 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <a href="./index.html#live-launches" class="text-cyan-300 hover:underline text-sm">← Back to launches</a>
+
+    <div class="mt-6 glass-card rounded-3xl p-6 border border-white/10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img id="token-logo" src="https://placehold.co/96x96/1e293b/e2e8f0?text=%24" alt="Token Logo" class="w-16 h-16 rounded-2xl object-cover">
+          <div>
+            <h1 id="token-name" class="text-2xl font-bold">Loading token...</h1>
+            <p id="token-symbol" class="text-gray-400">-</p>
+          </div>
+        </div>
+        <a id="trade-btn" href="#" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition-colors">
+          Trade on PancakeSwap
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mt-6 text-sm">
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-gray-400">Token Address</div>
+          <div id="token-address" class="font-mono break-all mt-1">-</div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-gray-400">Creator Wallet</div>
+          <div id="token-creator" class="font-mono mt-1">-</div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-gray-400">Launch Time</div>
+          <div id="token-launch-time" class="mt-1">-</div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-gray-400">Page Views</div>
+          <div id="token-views" class="mt-1">0</div>
+        </div>
+        <div class="md:col-span-2 bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-gray-400">Token Description</div>
+          <div id="token-description" class="mt-1 text-gray-200">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 glass-card rounded-2xl p-5 border border-white/10">
+      <h3 class="font-semibold text-lg">Share your token with the community.</h3>
+      <p class="text-sm text-gray-400 mt-1">🚀 I just launched a new token on Cow Dung Cake. Check it out before it explodes!</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <a id="share-twitter" href="#" target="_blank" rel="noreferrer" class="px-4 py-2 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-xs font-semibold">Share on Twitter</a>
+        <a id="share-telegram" href="#" target="_blank" rel="noreferrer" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-xs font-semibold">Share on Telegram</a>
+        <button id="share-copy" type="button" class="px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-xs font-semibold">Copy Token Link</button>
+      </div>
+    </div>
+
+    <div class="mt-8 glass-card rounded-3xl border border-white/10 overflow-hidden">
+      <iframe id="dex-chart" title="Dexscreener Chart" class="w-full h-[560px] bg-slate-900" src="about:blank"></iframe>
+    </div>
+
+    <p id="status" class="mt-4 text-sm text-gray-400"></p>
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://localhost:4000/api";
+
+    function shortAddress(address) {
+      if (!address || address.length < 10) return address || "-";
+      return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    }
+
+    function timeAgo(value) {
+      const ts = new Date(value).getTime();
+      if (!Number.isFinite(ts)) return "-";
+      const diff = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+      if (diff < 60) return `${diff} seconds ago`;
+      if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
+      return `${Math.floor(diff / 86400)} days ago`;
+    }
+
+    function resolveCreatorWalletLabel(creatorWallet, creatorEmail) {
+      if (creatorWallet && /^0x[a-fA-F0-9]{40}$/.test(String(creatorWallet))) return shortAddress(creatorWallet);
+      if (creatorEmail) return `${String(creatorEmail).split("@")[0].slice(0, 8)}...`;
+      return "unknown";
+    }
+
+    function getEngagementState() {
+      const key = "engagement_rewards_state";
+      const today = new Date().toISOString().slice(0, 10);
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "null");
+        if (!parsed || parsed.date !== today) {
+          const next = { date: today, count: 0 };
+          localStorage.setItem(key, JSON.stringify(next));
+          return next;
+        }
+        return parsed;
+      } catch {
+        const fallback = { date: today, count: 0 };
+        localStorage.setItem(key, JSON.stringify(fallback));
+        return fallback;
+      }
+    }
+
+    function showRewardPopup() {
+      const node = document.createElement("div");
+      node.className = "fixed z-[120] right-4 bottom-8 px-4 py-3 rounded-xl bg-emerald-600/95 text-white text-sm shadow-2xl border border-emerald-300/40 animate-fade-in";
+      node.textContent = "🎁 You earned 3 CDK for staying active!";
+      document.body.appendChild(node);
+      setTimeout(() => node.remove(), 2800);
+    }
+
+    function getShareMessage(tokenName) {
+      return `🚀 I just launched a new token on Cow Dung Cake. Check out ${tokenName} before it explodes!`;
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    async function initTokenPage() {
+      const params = new URLSearchParams(window.location.search);
+      const address = (params.get("address") || "").trim().toLowerCase();
+      const statusEl = document.getElementById("status");
+      if (!/^0x[a-f0-9]{40}$/.test(address)) {
+        statusEl.textContent = "Invalid token address.";
+        return;
+      }
+
+      try {
+        const [detailRes, viewRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/tokens/details/${address}`, { cache: "no-store" }),
+          fetch(`${API_BASE_URL}/tokens/${address}/view`, { method: "POST" })
+        ]);
+
+        if (!detailRes.ok) throw new Error("Could not load token details.");
+        const detailData = await detailRes.json();
+        const token = detailData.token;
+
+        let views = token.views || 0;
+        if (viewRes.ok) {
+          const viewData = await viewRes.json();
+          views = Number(viewData.views || views);
+        }
+
+        const logo = `https://api.dicebear.com/9.x/shapes/svg?seed=${encodeURIComponent(token.token_symbol || token.contract_address)}`;
+        document.getElementById("token-logo").src = logo;
+        document.getElementById("token-name").textContent = token.token_name || "Token";
+        document.getElementById("token-symbol").textContent = token.token_symbol ? `$${String(token.token_symbol).toUpperCase()}` : "-";
+        document.getElementById("token-address").textContent = token.contract_address || "-";
+        document.getElementById("token-creator").textContent = resolveCreatorWalletLabel(token.creator_wallet, token.creator_email);
+        document.getElementById("token-launch-time").textContent = timeAgo(token.created_at);
+        document.getElementById("token-views").textContent = Number(views).toLocaleString();
+        document.getElementById("token-description").textContent =
+          `Community-launched meme token ${token.token_symbol ? `$${String(token.token_symbol).toUpperCase()}` : ""} powered by Cow Dung Cake.`;
+
+        const lowerAddress = String(token.contract_address || address).toLowerCase();
+        const pageUrl = new URL(window.location.pathname + `?address=${lowerAddress}`, window.location.origin).href;
+        const shareMsg = encodeURIComponent(getShareMessage(token.token_name || "my token"));
+        const shareUrl = encodeURIComponent(pageUrl);
+        document.getElementById("share-twitter").href = `https://twitter.com/intent/tweet?text=${shareMsg}&url=${shareUrl}`;
+        document.getElementById("share-telegram").href = `https://t.me/share/url?url=${shareUrl}&text=${shareMsg}`;
+        document.getElementById("share-copy").addEventListener("click", async () => {
+          const ok = await copyText(pageUrl);
+          if (ok) statusEl.textContent = "Token link copied.";
+        });
+        document.getElementById("trade-btn").href = `https://pancakeswap.finance/swap?outputCurrency=${lowerAddress}`;
+        document.getElementById("dex-chart").src = `https://dexscreener.com/bsc/${lowerAddress}?embed=1&theme=dark`;
+        statusEl.textContent = "";
+      } catch (e) {
+        statusEl.textContent = e.message || "Unable to load token.";
+      }
+
+      setTimeout(() => {
+        if (document.visibilityState !== "visible") return;
+        const state = getEngagementState();
+        if (state.count >= 5) return;
+        state.count += 1;
+        localStorage.setItem("engagement_rewards_state", JSON.stringify(state));
+        showRewardPopup();
+      }, 30_000);
+    }
+
+    initTokenPage();
+  </script>
+</body>
+</html>

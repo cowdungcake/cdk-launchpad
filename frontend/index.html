@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COW DUNG CAKE (CDK) - The Shittiest Meme Coin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REPLACE_WITH_PUBLISHER_ID" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive !important; /* Use important to override tailwind */
+        }
+        
+        .coin-spin {
+            animation: spin 10s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .navbar-cow-spin {
+            display: inline-block;
+            animation: cowSpin 4s linear infinite;
+        }
+        
+        @keyframes cowSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-cyan-600/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-600/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+    </div>
+
+    <nav class="relative z-50 border-b border-white/10 backdrop-blur-xl bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <a href="#" class="flex items-center py-4 px-2">
+                        <div class="navbar-cow-spin h-8 w-8 mr-2 flex items-center justify-center">
+                            <img src="https://i.postimg.cc/rF5FBgRB/cow1-removebg-preview.png" alt="CDK Logo" class="h-8 w-8">
+                        </div>
+                        <span class="font-semibold text-white text-lg">COW DUNG CAKE (CDK)</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                    <a href="#about" class="hover:text-white transition-colors">About</a>
+                    <a href="#tokenomics" class="hover:text-white transition-colors">Tokenomics</a>
+                    <a href="#buy" class="hover:text-white transition-colors">Earn Daily</a>
+                    <a href="#roadmap" class="hover:text-white transition-colors">Roadmap</a>
+                    <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- This container will be managed by app.js -->
+                    <div id="user-session-container" class="flex items-center gap-4">
+                        <!-- Logged-out state -->
+                        <button id="show-auth-modal-btn" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-full text-sm font-semibold transition-colors">
+                            Login / Register
+                        </button>
+
+                        <!-- Logged-in state (hidden by default) -->
+                        <div id="user-info-d" class="hidden items-center gap-4 text-sm">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="coins" class="w-5 h-5 text-yellow-400"></i>
+                                <span id="user-coin-balance" class="font-bold">0</span>
+                            </div>
+                            <span id="user-email" class="text-gray-400"></span>
+                            <button id="logout-btn" class="text-gray-400 hover:text-white transition-colors" title="Logout">
+                                <i data-lucide="log-out" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button id="connectWallet" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-semibold transition-all hover:scale-105 flex items-center gap-2">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        <span id="walletAddress">Connect Wallet</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative z-40 border-b border-white/10 bg-black/20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+            <div id="global-crypto-ticker" class="ticker-track text-xs text-gray-300 whitespace-nowrap">
+                <span class="inline-block px-4">Trending tokens loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="relative z-30 px-4 sm:px-6 lg:px-8 mt-4">
+        <div class="max-w-6xl mx-auto adsense-top ad-lazy h-[90px] bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500"
+             data-ad-slot="REPLACE_WITH_SLOT"
+             data-ad-text="Advertisement">
+            Advertisement
+        </div>
+    </div>
+
+    <div class="adsense-right ad-lazy hidden xl:flex fixed right-6 top-40 z-40 w-[300px] h-[250px] bg-black/20 border border-dashed border-white/10 rounded-2xl items-center justify-center text-xs text-gray-500"
+         data-ad-slot="REPLACE_WITH_SLOT"
+         data-ad-text="Advertisement">
+        Advertisement
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20" style="background-image: url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80'); background-size: cover; background-position: center; background-blend-mode: multiply; background-color: rgba(2, 6, 23, 0.7);">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate__animated animate__fadeInDown">COW DUNG CAKE (CDK)</h1>
+            <p class="text-xl md:text-2xl mb-12 animate__animated animate__fadeIn animate__delay-1s">The shittiest meme coin that might actually do something!</p>
+            
+            <!-- Promotional Slogans -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 animate__animated animate__fadeIn animate__delay-1s">
+                <div class="bg-purple-600/30 border border-purple-400/50 rounded-full px-6 py-2 backdrop-blur-sm">
+                    <span class="text-sm md:text-base font-semibold">💰 10,000,000 CDK Daily Rewards</span>
+                </div>
+                <div class="bg-cyan-600/30 border border-cyan-400/50 rounded-full px-6 py-2 backdrop-blur-sm">
+                    <span class="text-sm md:text-base font-semibold">✨ Free Mining Rewards Every 24hrs</span>
+                </div>
+                <div class="bg-green-600/30 border border-green-400/50 rounded-full px-6 py-2 backdrop-blur-sm">
+                    <span class="text-sm md:text-base font-semibold">🚀 No Investment Needed, Just Time</span>
+                </div>
+            </div>
+            
+            <div class="flex justify-center mb-12">
+                <div class="coin-spin">
+                    <img src="https://i.postimg.cc/rF5FBgRB/cow1-removebg-preview.png" alt="CDK Coin" class="w-24 h-24">
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 animate__animated animate__fadeIn animate__delay-2s">
+                <a href="#buy" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                    Start Mining Today
+                </a>
+                <a href="#create" class="bg-transparent hover:bg-white text-white hover:text-purple-700 font-bold py-3 px-8 border-2 border-white rounded-full text-lg transition duration-300 transform hover:scale-105">
+                    LAUNCH YOUR OWN COIN
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Mining Activity Section -->
+    <section id="live-activity" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white">Live Mining Activity</h2>
+                <p class="text-gray-400 mt-2">Thousands of users are already earning coins.</p>
+                <p id="activity-refresh-status" class="text-xs text-cyan-300 mt-2">Activity feed updating...</p>
+            </div>
+
+            <!-- Live Platform Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center animate__animated animate__fadeInUp">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <i class="fas fa-users text-3xl text-purple-400"></i>
+                        <h3 class="text-xl font-semibold text-white">Registered Users</h3>
+                    </div>
+                    <p id="stat-registered-users" class="text-4xl font-bold text-white">Live data updating</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <i class="fas fa-coins text-3xl text-yellow-400"></i>
+                        <h3 class="text-xl font-semibold text-white">Community Coins Distributed</h3>
+                    </div>
+                    <p id="stat-community-coins" class="text-4xl font-bold text-white">Live data updating</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <i class="fas fa-rocket text-3xl text-pink-400"></i>
+                        <h3 class="text-xl font-semibold text-white">Tokens Created</h3>
+                    </div>
+                    <p id="stat-tokens-created" class="text-4xl font-bold text-white">Live data updating</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <i class="fas fa-gift text-3xl text-cyan-400"></i>
+                        <h3 class="text-xl font-semibold text-white">Community Referrals</h3>
+                    </div>
+                    <p id="stat-community-referrals" class="text-4xl font-bold text-white">Live data updating</p>
+                </div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <div class="h-52 md:h-64 overflow-y-auto" id="activity-feed">
+                        <!-- Placeholder data -->
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- User Dashboard Section -->
+    <section id="user-dashboard" class="hidden relative z-10 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 border border-white/10">
+            <h2 class="font-['Space_Grotesk'] font-bold text-2xl md:text-3xl mb-6 text-center">User Dashboard</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-8 border-b border-white/10 pb-6">
+                <div >
+                    <h3 class="text-sm font-medium text-gray-400">Email</h3>
+                    <p id="user-stat-email" class="text-lg font-semibold truncate">-</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-400">Wallet Balance</h3>
+                    <p id="user-stat-balance" class="text-lg font-semibold text-yellow-400">0</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-400">Total Referrals</h3>
+                    <p id="user-stat-referrals" class="text-lg font-semibold">0</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-400">Tokens Launched</h3>
+                    <p id="user-stat-tokens" class="text-lg font-semibold">0</p>
+                </div>
+            </div>
+
+            <div id="dashboard-status" class="text-center text-purple-400 mb-4"></div>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <!-- Daily Reward -->
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-3">Daily CDK Coins</h3>
+                    <p class="text-sm text-gray-400 mb-4">Click once every 24 hours to claim free CDK Coins.</p>
+                    <button id="daily-claim-btn" class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="gift" class="w-5 h-5"></i>
+                        Claim Daily Reward
+                    </button>
+                </div>
+                <!-- Activity Reward -->
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-3">Activity Rewards</h3>
+                    <p class="text-sm text-gray-400 mb-4">Stay active on key pages for at least 30 seconds to earn extra coins. Limited times per day.</p>
+                    <button id="ad-claim-btn" class="w-full py-3 bg-pink-600 hover:bg-pink-700 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="play-circle" class="w-5 h-5"></i>
+                        How Activity Rewards Work
+                    </button>
+                </div>
+                <!-- Referral Code -->
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-3">Refer & Earn</h3>
+                    <p class="text-sm text-gray-400 mb-4">Share your code. You both get bonus coins on signup!</p>
+                    <div class="relative">
+                        <input id="referral-code-input" type="text" class="w-full p-2 bg-white/5 border border-white/10 rounded-lg text-center font-mono" readonly>
+                        <button id="copy-referral-btn" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 glass-card rounded-2xl p-5 border border-white/10">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-lg">Daily Streak</h3>
+                    <span id="streak-badge" class="px-3 py-1 rounded-full text-xs bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">No streak yet</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div id="streak-day-1" class="rounded-xl border border-white/10 bg-white/5 py-3 text-sm text-gray-300">Day 1</div>
+                    <div id="streak-day-2" class="rounded-xl border border-white/10 bg-white/5 py-3 text-sm text-gray-300">Day 2</div>
+                    <div id="streak-day-3" class="rounded-xl border border-white/10 bg-white/5 py-3 text-sm text-gray-300">Day 3</div>
+                </div>
+            </div>
+
+            <!-- User launched tokens -->
+            <div class="mt-8">
+                <h3 class="font-semibold text-lg mb-3 flex items-center justify-center gap-2">
+                    <i data-lucide="rocket" class="w-5 h-5 text-pink-400"></i>
+                    Your Launched Tokens
+                </h3>
+                <div id="user-tokens-status" class="text-center text-gray-400 text-sm mb-3"></div>
+                <div id="user-tokens-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <!-- Dashboard sidebar ad placeholder -->
+                <div class="mt-6 adsense-sidebar ad-lazy w-full h-32 bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500" data-ad-text="Advertisement" data-ad-slot="REPLACE_WITH_SLOT">
+                    Advertisement
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 text-white">ABOUT COW DUNG CAKE</h2>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://i.postimg.cc/k57d11Gf/cow-background.png&auto=format&fit=crop&w=1470&q=80" alt="Cow in India" class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-4 text-white">From India to the World</h3>
+                    <p class="text-lg mb-6 text-gray-300">
+                        Cows poop. A lot. Like, a whole lot. And we're here to make that your problem (and hopefully your profit).
+                        CDK is the ultimate shitposting coin with a twist - we might actually ship literal shit someday!
+                    </p>
+                    <p class="text-lg mb-6 text-gray-300">
+                        When we moon (not if, WHEN), we promise to start exporting this black gold to USA, Europe and beyond.
+                        Imagine getting rich from crypto AND helping farmers fertilize their fields. That's what we call a win-win!
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        Every CDK token is a ticket to the future of agricultural shitposting. 
+                        Buy now before we actually have to deliver on our promises!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center hover:transform hover:scale-105 transition duration-300">
+                    <div class="text-4xl mb-4 text-purple-400">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-white">100% Organic</h4>
+                    <p class="text-gray-400">Our fertilizer is completely natural, chemical-free, and perfect for organic farming.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center hover:transform hover:scale-105 transition duration-300">
+                    <div class="text-4xl mb-4 text-cyan-400">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-white">Global Reach</h4>
+                    <p class="text-gray-400">We're exporting to USA, Europe, Canada and beyond, creating international demand.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10 text-center hover:transform hover:scale-105 transition duration-300">
+                    <div class="text-4xl mb-4 text-pink-400">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2 text-white">Real Utility</h4>
+                    <p class="text-gray-400">CDK tokens can be used to purchase our fertilizer at discounted rates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="create" class="relative z-10 pb-28 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-5xl mb-4">Create Your Token</h2>
+                <p class="text-gray-400">Fill in details and launch directly from your wallet</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="glass-card rounded-3xl p-8 border border-white/10">
+                    <form id="coinForm" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="col-span-2 sm:col-span-1">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Token Name</label>
+                                <input type="text" id="tokenName" placeholder="e.g. DogeMoon" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all placeholder-gray-600" required>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Symbol (Ticker)</label>
+                                <input type="text" id="tokenSymbol" placeholder="e.g. DOGE" maxlength="10" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all placeholder-gray-600 uppercase" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Total Supply</label>
+                            <div class="relative">
+                                <input type="number" id="totalSupply" placeholder="1000000000" min="1" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all placeholder-gray-600" required>
+                                <span class="absolute right-4 top-3 text-gray-500 text-sm">tokens</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Transfer Tax (0-20%)</label>
+                            <input type="number" id="tokenTax" min="0" max="20" value="5" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all placeholder-gray-600" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                            <textarea id="description" rows="3" placeholder="Tell the world about your coin..." class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all placeholder-gray-600 resize-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Token Theme</label>
+                            <div class="grid grid-cols-4 gap-3">
+                                <button type="button" class="theme-btn active p-3 rounded-xl border-2 border-purple-500 bg-gradient-to-br from-purple-600 to-pink-600" data-theme="purple">
+                                    <div class="w-4 h-4 rounded-full bg-white/50 mx-auto"></div>
+                                </button>
+                                <button type="button" class="theme-btn p-3 rounded-xl border-2 border-transparent bg-white/5 hover:bg-white/10" data-theme="cyan">
+                                    <div class="w-4 h-4 rounded-full bg-cyan-500 mx-auto"></div>
+                                </button>
+                                <button type="button" class="theme-btn p-3 rounded-xl border-2 border-transparent bg-white/5 hover:bg-white/10" data-theme="green">
+                                    <div class="w-4 h-4 rounded-full bg-green-500 mx-auto"></div>
+                                </button>
+                                <button type="button" class="theme-btn p-3 rounded-xl border-2 border-transparent bg-white/5 hover:bg-white/10" data-theme="orange">
+                                    <div class="w-4 h-4 rounded-full bg-orange-500 mx-auto"></div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Token Logo</label>
+                            <div class="relative group">
+                                <input type="file" id="logoUpload" accept="image/*" class="hidden">
+                                <label for="logoUpload" class="flex flex-col items-center justify-center w-full h-32 px-4 transition-all border-2 border-white/10 border-dashed rounded-xl cursor-pointer hover:border-purple-500/50 hover:bg-white/5 group">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <i data-lucide="upload-cloud" class="w-8 h-8 mb-3 text-gray-400 group-hover:text-purple-400 transition-colors"></i>
+                                        <p class="text-sm text-gray-400">Click to upload or drag and drop</p>
+                                        <p class="text-xs text-gray-600">SVG, PNG, JPG or GIF (max. 2MB)</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group">
+                            <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+                            Launch Token
+                        </button>
+                    </form>
+                    <p id="formStatus" class="mt-4 text-sm text-red-300 min-h-5 break-all"></p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 border border-white/10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-400 rounded-full border border-green-500/20">Live Preview</span>
+                    </div>
+                    
+                    <div class="flex flex-col items-center justify-center h-full min-h-[400px]">
+                        <div id="previewCard" class="relative w-64 h-80 rounded-3xl bg-gradient-to-br from-purple-600 to-pink-600 p-6 shadow-2xl transform transition-all duration-500 hover:scale-105 flex flex-col items-center text-center">
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')] opacity-50 rounded-3xl"></div>
+                            
+                            <div class="relative z-10 mt-4">
+                                <div id="previewLogo" class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl mb-4 border-2 border-white/30">
+                                    R
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 flex-1 flex flex-col justify-center">
+                                <h3 id="previewName" class="font-bold text-2xl mb-1 text-white font-['Space_Grotesk']">MOON</h3>
+                                <p id="previewSymbol" class="text-white/70 font-mono text-sm mb-4">$MOON</p>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs text-white/60">
+                                        <span>Supply:</span>
+                                        <span id="previewSupply" class="text-white font-mono">1B</span>
+                                    </div>
+                                    <div class="w-full bg-black/20 rounded-full h-2 overflow-hidden">
+                                        <div class="bg-white/40 h-full rounded-full w-3/4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="relative z-10 mt-auto pt-4 border-t border-white/10 w-full">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-white/50">BEP-20</span>
+                                    <i data-lucide="verified" class="w-4 h-4 text-white/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-center text-gray-500 text-sm mt-8">Preview updates as you edit token fields</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section id="tokenomics" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 text-white">TOKENOMICS</h2>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-4 text-white">Fair & Sustainable Distribution</h3>
+                    <p class="text-lg mb-6 text-gray-300">
+                        CDK has a total supply of 1 trillion tokens with carefully designed tokenomics to ensure long-term growth 
+                        and stability. Our allocation ensures the project has resources to grow while rewarding early supporters.
+                    </p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-bold text-purple-400">5% Marketing</h4>
+                            <p class="text-gray-400">To spread awareness about our organic fertilizer revolution</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-purple-400">5% Development</h4>
+                            <p class="text-gray-400">To build our international distribution network</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-purple-400">2% Liquidity</h4>
+                            <p class="text-gray-400">Locked to ensure smooth trading</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-purple-400">88% Public Sale</h4>
+                            <p class="text-gray-400">Available for everyone to join the movement</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tokenomics" class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+            </div>
+            
+            <div class="mt-16 glass-card rounded-2xl p-8 border border-white/10">
+                <h3 class="text-2xl font-bold mb-6 text-center text-white">Token Utility</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex items-start gap-4">
+                        <div class="text-2xl text-purple-400 mt-1">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-white">Purchase Fertilizer</h4>
+                            <p class="text-gray-400">Use CDK tokens to buy our premium organic cow dung fertilizer at special discounted rates.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-2xl text-cyan-400 mt-1">
+                            <i class="fas fa-tractor"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-white">Farm Subsidies</h4>
+                            <p class="text-gray-400">Large-scale farmers get additional discounts when paying with CDK tokens.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-2xl text-pink-400 mt-1">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-white">Staking Rewards</h4>
+                            <p class="text-gray-400">Earn passive income by staking your CDK tokens in our farming pools.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-2xl text-yellow-400 mt-1">
+                            <i class="fas fa-vote-yea"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-white">Governance</h4>
+                            <p class="text-gray-400">CDK holders vote on important decisions about our fertilizer operations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="relative z-10 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-5xl mb-4">Why Launch Here?</h2>
+                <p class="text-gray-400">Simple flow with real contract deployment and fee automation</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="zap" class="w-6 h-6 text-purple-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Instant Deployment</h3>
+                    <p class="text-gray-400 text-sm">Deploy your token in one transaction from your own wallet.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Fixed Tax Wallet</h3>
+                    <p class="text-gray-400 text-sm">Tax wallet is locked in launchpad contract and cannot be changed by users.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6 text-pink-400"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Live Discovery</h3>
+                    <p class="text-gray-400 text-sm">Recent launches plus top gainers and losers from Dexscreener feeds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 text-white">OUR ROADMAP</h2>
+            
+            <div class="relative">
+                <!-- Timeline line -->
+                <div class="border-l-4 border-purple-500 absolute h-full left-1/2 transform -translate-x-1/2"></div>
+                
+                <!-- Timeline items -->
+                <div class="space-y-16">
+                    <!-- Phase 1 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:block md:w-1/2"></div>
+                        <div class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 border-4 border-slate-950 mx-auto md:mx-0">
+                            <span class="text-white font-bold">1</span>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-8 md:pl-12">
+                            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                                <h3 class="text-xl font-bold mb-2 text-white">Phase 1: Launch & Awareness (Q3 2025)</h3>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-400">
+                                    <li>Token launch on PancakeSwap</li>
+                                    <li>Initial marketing campaigns</li>
+                                    <li>First fertilizer production facility established in India</li>
+                                    <li>10,000+ token holders</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div class="relative flex items-center">
+                        <div class="w-full md:w-1/2 pr-8 md:pr-12">
+                            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                                <h3 class="text-xl font-bold mb-2 text-white">Phase 2: Expansion (Q4 2025)</h3>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-400">
+                                    <li>First international shipment to USA</li>
+                                    <li>CEX listings</li>
+                                    <li>Staking platform launch</li>
+                                    <li>Partnerships with organic farms</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 border-4 border-slate-950 mx-auto md:mx-0">
+                            <span class="text-white font-bold">2</span>
+                        </div>
+                        <div class="hidden md:block md:w-1/2"></div>
+                    </div>
+                    
+                    <!-- Phase 3 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:block md:w-1/2"></div>
+                        <div class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 border-4 border-slate-950 mx-auto md:mx-0">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-8 md:pl-12">
+                            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                                <h3 class="text-xl font-bold mb-2 text-white">Phase 3: Global Domination (2024)</h3>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-400">
+                                    <li>Expansion to Europe and Canada</li>
+                                    <li>CDK payment integration for fertilizer purchases</li>
+                                    <li>100,000+ token holders</li>
+                                    <li>Governance platform launch</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="live-launches" class="relative z-10 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-4xl mb-2">🚀 LIVE TOKEN LAUNCHES</h2>
+                    <p class="text-gray-400">New tokens launching in real time</p>
+                </div>
+                <div class="text-sm text-gray-400">Auto refresh: <span class="text-cyan-300">every 5 seconds</span> <span id="launch-refresh-status" class="text-gray-500">(updating)</span></div>
+            </div>
+            <div id="live-launch-feed" class="grid md:grid-cols-2 gap-4"></div>
+        </div>
+    </section>
+
+    <section id="marketplace" class="relative z-10 pb-28 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-4xl mb-2">Market Pulse</h2>
+                    <p class="text-gray-400">Live token stream from Dexscreener</p>
+                    <p class="text-sm text-cyan-300 mt-1">● Live market updating every 30 seconds</p>
+                </div>
+                <div class="text-sm text-gray-400">
+                    Status: <span id="recentStatus" class="text-green-400">Loading...</span> | Updated: <span id="recentUpdatedAt">-</span>
+                </div>
+            </div>
+
+            <!-- Explore / trending top banner ad placeholder -->
+            <div class="adsense-banner ad-lazy w-full h-24 mb-6 bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500" data-ad-text="Advertisement" data-ad-slot="REPLACE_WITH_SLOT">
+                Advertisement
+            </div>
+
+            <div class="grid gap-6">
+                <div>
+                    <h3 class="font-semibold text-xl mb-3">🔥 HOT TOKENS RIGHT NOW</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" id="hotTokens"></div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-xl mb-3">Recent Launched Coins</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" id="recentCoins"></div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-xl mb-3 text-green-300">Top Gainers</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" id="topGainers"></div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-xl mb-3 text-rose-300">Top Losers</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" id="topLosers"></div>
+                </div>
+
+                <!-- Mid-content ad placeholder -->
+                <div class="adsense-mid-content ad-lazy w-full h-24 bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500" data-ad-text="Advertisement" data-ad-slot="REPLACE_WITH_SLOT">
+                    Advertisement
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="token-discovery" class="relative z-10 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-end justify-between mb-6">
+                <div>
+                    <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-4xl mb-2">Token Discovery Grid</h2>
+                    <p class="text-gray-400">Auto updating discovery signals for platform participation.</p>
+                </div>
+                <div class="text-xs text-gray-400" id="discovery-refresh-status">Discovery grid updating...</div>
+            </div>
+            <div id="discovery-grid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
+    </section>
+
+    <div class="px-4 sm:px-6 lg:px-8 pb-12">
+        <div class="max-w-6xl mx-auto adsense-mid ad-lazy h-[90px] bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500"
+             data-ad-slot="REPLACE_WITH_SLOT"
+             data-ad-text="Advertisement">
+            Advertisement
+        </div>
+    </div>
+
+    <section id="market-education" class="relative z-10 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                <h3 class="font-semibold text-lg mb-3">What is a meme coin launchpad</h3>
+                <p class="text-sm text-gray-400">A meme coin launchpad helps creators deploy tokens quickly while giving the community a place to discover new launches and market activity in one view.</p>
+            </div>
+            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                <h3 class="font-semibold text-lg mb-3">How token launches work</h3>
+                <p class="text-sm text-gray-400">Creators submit token details, trigger deployment through the launch flow, and receive contract information for sharing and discovery across the platform.</p>
+            </div>
+            <div class="glass-card rounded-2xl p-6 border border-white/10">
+                <h3 class="font-semibold text-lg mb-3">How liquidity works</h3>
+                <p class="text-sm text-gray-400">Liquidity pools allow market trading by pairing assets. Strong liquidity depth generally helps improve tradability and reduce large price swings.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The CDK Story Section -->
+    <section id="buy" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-white">Earn CDK Daily – Just Like That Coin Everyone's Talking About</h2>
+            <p class="text-center text-gray-400 mb-16 text-lg max-w-3xl mx-auto">
+                No mining hardware. No crazy energy bills. Just your phone and a few minutes a day. Welcome to the future of earning.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- The Journey -->
+                <div class="glass-card rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        Your Journey Starts Today
+                    </h3>
+                    <div class="space-y-4 text-gray-300">
+                        <p><strong class="text-purple-400">Day 1:</strong> You register in seconds. No KYC drama. No paperwork. Just your email and a password. You instantly receive your first batch of CDK tokens as a welcome bonus.</p>
+                        
+                        <p><strong class="text-cyan-400">Daily Habit:</strong> Every 24 hours, you tap a button to claim your daily mining reward. It takes 10 seconds. Your holding grows. Simple. Addictive.</p>
+                        
+                        <p><strong class="text-pink-400">Stay Active:</strong> Stay active on the platform to earn bonus coins while exploring launches, market movers, and community activity.</p>
+                        
+                        <p><strong class="text-green-400">Invite Friends:</strong> Share your referral code. Each friend who joins? You both get a bonus. They build their stash. You build yours. Community grows. Everyone wins.</p>
+                    </div>
+                </div>
+
+                <!-- The Rewards -->
+                <div class="glass-card rounded-2xl p-8 border border-white/10">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fas fa-gift text-green-400"></i>
+                        What You'll Earn
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                            <p class="text-white font-bold">💰 Daily Claims</p>
+                            <p class="text-gray-400 text-sm mt-1">Claim every day and watch your balance grow. The longer your streak, the sweeter the comeback.</p>
+                        </div>
+                        
+                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                            <p class="text-white font-bold">✨ Activity Rewards</p>
+                            <p class="text-gray-400 text-sm mt-1">Stay active on the platform to earn bonus coins. Daily limits apply.</p>
+                        </div>
+                        
+                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                            <p class="text-white font-bold">👥 Referral Bonuses</p>
+                            <p class="text-gray-400 text-sm mt-1">Build your network. Every friend is a new income stream. No hard selling. Just share.</p>
+                        </div>
+                        
+                        <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+                            <p class="text-white font-bold">🚀 Launch Your Own Token</p>
+                            <p class="text-gray-400 text-sm mt-1">Use your CDK to launch your own meme coin. Become a creator, not just a collector.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Call to Action -->
+            <div class="glass-card rounded-2xl p-8 border border-white/10 bg-gradient-to-r from-purple-600/20 to-pink-600/20 text-center">
+                <h3 class="text-2xl font-bold text-white mb-4">No Money Required. Just Time.</h3>
+                <p class="text-gray-300 mb-6 text-lg">
+                    Every second you spend here is an investment in your future. Start earning today. Withdraw tomorrow. The choice is yours.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="document.getElementById('show-auth-modal-btn').click()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-bold transition duration-300">
+                        Claim Your Daily Rewards Now
+                    </button>
+                    <a href="https://t.me/CDK_official" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold transition duration-300 flex items-center justify-center gap-2">
+                        <i class="fab fa-telegram"></i> Join Community
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex justify-center gap-4 mt-8">
+                <a href="https://t.me/CDK_official" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center gap-2">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="https://x.com/CowDungCakeV3" target="_blank" class="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition duration-300 flex items-center gap-2">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="#" class="bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 transition duration-300 flex items-center gap-2">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="community" class="relative z-10 pb-28 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-5xl mb-4">Community Leaderboards</h2>
+                <p class="text-gray-400">See who's making the biggest splash in the community.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2"><i data-lucide="users" class="w-5 h-5 text-cyan-400"></i> Top Referrers</h3>
+                    <div id="leaderboard-referrers" class="space-y-3">
+                        <!-- Content will be injected by app.js -->
+                        <p class="text-gray-500 text-sm">Loading leaderboard...</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2"><i data-lucide="coins" class="w-5 h-5 text-yellow-400"></i> Top Coin Earners</h3>
+                    <div id="leaderboard-earners" class="space-y-3">
+                        <!-- Content will be injected by app.js -->
+                        <p class="text-gray-500 text-sm">Loading leaderboard...</p>
+                    </div>
+                </div>
+
+                <!-- Leaderboard sidebar ad placeholder -->
+                <div class="adsense-sidebar ad-lazy w-full h-32 bg-black/20 border border-dashed border-white/10 rounded-2xl flex items-center justify-center text-xs text-gray-500" data-ad-text="Advertisement" data-ad-slot="REPLACE_WITH_SLOT">
+                    Advertisement
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="daily-leaderboards" class="relative z-10 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="font-['Space_Grotesk'] font-bold text-3xl md:text-5xl mb-4">Daily Leaderboards</h2>
+                <p class="text-gray-400">Resets every 24 hours based on platform participation.</p>
+                <p id="leaderboard-refresh-status" class="text-xs text-cyan-300 mt-2">Leaderboards updating...</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-4">Top Earners Today</h3>
+                    <div id="daily-earners" class="space-y-2 text-sm text-gray-300"></div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-4">Top Referrers Today</h3>
+                    <div id="daily-referrers" class="space-y-2 text-sm text-gray-300"></div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <h3 class="font-semibold text-lg mb-4">Top Token Creators</h3>
+                    <div id="daily-creators" class="space-y-2 text-sm text-gray-300"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 text-white">FREQUENTLY ASKED QUESTIONS</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <button class="faq-question w-full text-left font-bold text-lg text-white flex justify-between items-center">
+                        What makes CDK different from other meme coins?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer mt-4 hidden text-gray-400">
+                        <p>Unlike most meme coins, we're upfront about being completely ridiculous. But hey, if we actually ship some cow shit someday, that's more utility than 99% of crypto projects! Plus our memes are fire.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <button class="faq-question w-full text-left font-bold text-lg text-white flex justify-between items-center">
+                        How is the fertilizer produced?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer mt-4 hidden text-gray-400">
+                        <p>Step 1: Find cow. Step 2: Wait for cow to poop. Step 3: ??? Step 4: Profit! Our "production process" is as legit as our whitepaper (which doesn't exist). But if we get rich, we promise to actually figure out how to export this stuff!</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <button class="faq-question w-full text-left font-bold text-lg text-white flex justify-between items-center">
+                        Is this a serious project or just a joke?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer mt-4 hidden text-gray-400">
+                        <p>Yes. Next question. (Okay fine, it's 99% joke but that 1% chance we actually ship cow shit makes us better than most meme coins, right? RIGHT?)</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6 border border-white/10">
+                    <button class="faq-question w-full text-left font-bold text-lg text-white flex justify-between items-center">
+                        When can I start buying fertilizer with CDK?
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer mt-4 hidden text-gray-400">
+                        <p>When we moon (and only if we moon), we'll set up a website where you can buy cow shit with CDK. Until then, just enjoy the memes and pray for a pump!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16">CONTACT US</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
+                    <p class="mb-8 text-gray-400">Have questions about CDK or our organic fertilizer? Reach out to our team and we'll be happy to help!</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="text-2xl text-purple-400">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Email us at:</p>
+                                <a href="mailto:info@cowdungcake.com" class="font-bold hover:underline">info@cowdungcake.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-2xl text-cyan-400">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Join our Telegram:</p>
+                                <a href="https://t.me/CDK_official" target="_blank" class="font-bold hover:underline">t.me/CDK_official</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-2xl text-pink-400">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Follow us on Twitter:</p>
+                                <a href="https://x.com/CowDungCakeV3" target="_blank" class="font-bold hover:underline">@CowDungCakeV3</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 rounded-lg bg-slate-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-2">Your Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-slate-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2">Your Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-slate-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                        </div>
+                        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 w-full md:w-auto">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <img src="https://img.icons8.com/color/48/000000/cow.png" alt="CDK Logo" class="h-8 w-8 mr-2">
+                        <span class="font-semibold text-lg">COW DUNG CAKE (CDK)</span>
+                    </div>
+                    <p class="mt-2 text-gray-400">Shitposting our way to the moon, one turd at a time.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://t.me/CDK_official" target="_blank" class="text-gray-400 hover:text-white transition duration-300 text-xl">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://x.com/CowDungCakeV3" target="_blank" class="text-gray-400 hover:text-white transition duration-300 text-xl">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300 text-xl">
+                        <i class="fab fa-medium"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-8 pt-8 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                <p class="text-gray-400 mb-0">&copy; 2026 Cow Dung Cake. All rights reserved.</p>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">Legal</h4>
+                    <div class="flex flex-wrap gap-x-6 gap-y-2">
+                        <a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a>
+                        <a href="privacy.html" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                        <a href="terms.html" class="text-gray-400 hover:text-white transition duration-300">Terms</a>
+                        <a href="disclaimer.html" class="text-gray-400 hover:text-white transition duration-300">Disclaimer</a>
+                        <a href="about.html" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                        <a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-6">This website displays advertisements through third-party advertising networks. Users are not rewarded for viewing or interacting with advertisements.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button & Balance Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg hidden z-[999] transition duration-300 transform hover:scale-110">
+        <i class="fas fa-arrow-up text-lg"></i>
+    </button>
+
+    <button id="balance-display" class="fixed bottom-8 right-24 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-4 rounded-full shadow-lg hidden z-[999] transition duration-300 transform hover:scale-110 flex items-center gap-2 whitespace-nowrap">
+        <i class="fas fa-coins text-lg"></i>
+        <div class="flex flex-col">
+            <span class="text-xs text-cyan-100">Balance</span>
+            <span id="balance-value" class="font-bold text-yellow-300">0</span>
+        </div>
+    </button>
+
+    <div class="adsense-mobile-sticky ad-lazy fixed bottom-0 left-0 w-full z-50 md:hidden bg-black/70 p-2 border-t border-white/10 text-center text-[10px] text-gray-400"
+         data-ad-slot="REPLACE_WITH_SLOT"
+         data-ad-text="Advertisement">
+        Advertisement
+    </div>
+
+    <!-- Floating Cow -->
+    <div class="fixed bottom-4 left-4 z-50 hidden md:block">
+        <div class="floating animate__animated animate__bounceIn animate__delay-3s">
+            <img src="https://i.postimg.cc/rF5FBgRB/cow1-removebg-preview.png" alt="Floating Cow" class="w-16 h-16">
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div id="auth-modal-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div id="auth-modal-content" class="relative bg-slate-900 border border-white/10 rounded-3xl p-8 max-w-md w-full transform scale-95 opacity-0 transition-all duration-300">
+            <button id="auth-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div>
+                <div class="flex border-b border-white/10 mb-6">
+                    <button id="auth-tab-login" class="flex-1 py-3 font-semibold text-lg border-b-2 border-purple-500 text-white">Login</button>
+                    <button id="auth-tab-register" class="flex-1 py-3 font-semibold text-lg border-b-2 border-transparent text-gray-500">Register</button>
+                </div>
+                
+                <p id="auth-status" class="text-center text-red-400 mb-4 h-5"></p>
+
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all" required>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded-xl font-bold text-lg transition-colors">Login</button>
+                </form>
+
+                <!-- Register Form (hidden by default) -->
+                <form id="register-form" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <input type="email" id="register-email" placeholder="you@example.com" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                        <input type="password" id="register-password" placeholder="Choose a strong password" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Referral Code (Optional)</label>
+                        <input type="text" id="register-referral" placeholder="Enter code from a friend" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded-xl font-bold text-lg transition-colors">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modalOverlay"></div>
+        <div class="relative bg-slate-900 border border-white/10 rounded-3xl p-8 max-w-md w-full transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                    <i data-lucide="check" class="w-10 h-10 text-green-400"></i>
+                </div>
+                <h3 class="font-['Space_Grotesk'] font-bold text-2xl mb-2">Token Created!</h3>
+                <p class="text-gray-400 mb-6">Your token has been deployed on-chain.</p>
+                
+                <div class="bg-white/5 rounded-xl p-4 mb-4 text-left font-mono text-sm break-all border border-white/10">
+                    <div class="text-gray-500 mb-1">Token Address:</div>
+                    <div class="text-purple-400" id="contractAddress">-</div>
+                </div>
+                <a id="txLink" class="block mb-6 text-cyan-400 underline break-all text-sm" href="#" target="_blank" rel="noreferrer">View transaction</a>
+
+                <div class="flex gap-3">
+                    <button id="closeModalBtn" class="flex-1 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-medium transition-colors">Close</button>
+                    <a id="viewTokenLink" class="flex-1 py-3 bg-purple-600 hover:bg-purple-700 rounded-xl font-medium transition-colors flex items-center justify-center gap-2" href="#" target="_blank" rel="noreferrer">
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                        View Token
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.15.0/dist/ethers.umd.min.js"></script>
+    <script src="./config.js"></script>
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                }
+            });
+        }
+        
+        // FAQ accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                if (answer) {
+                    answer.classList.toggle('hidden');
+                }
+                if (icon) {
+                    icon.classList.toggle('transform');
+                    icon.classList.toggle('rotate-180');
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        const balanceDisplay = document.getElementById('balance-display');
+        const balanceValue = document.getElementById('balance-value');
+        
+        if (backToTopButton) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                    if (balanceDisplay) balanceDisplay.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                    if (balanceDisplay) balanceDisplay.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Balance display button - updates when state changes
+        if (balanceDisplay && balanceValue) {
+            // Set initial balance if user is logged in
+            setTimeout(() => {
+                const balanceEl = document.getElementById('user-coin-balance');
+                if (balanceEl && balanceEl.textContent) {
+                    balanceValue.textContent = balanceEl.textContent;
+                }
+            }, 100);
+
+            // Listen for balance updates (mutation observer for when user logs in)
+            const userCoinBalanceEl = document.getElementById('user-coin-balance');
+            if (userCoinBalanceEl) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList' || mutation.type === 'characterData') {
+                            balanceValue.textContent = userCoinBalanceEl.textContent;
+                        }
+                    });
+                });
+                observer.observe(userCoinBalanceEl, { 
+                    childList: true, 
+                    characterData: true, 
+                    subtree: true 
+                });
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId) {
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Live activity feed
+        const activityFeed = document.getElementById('activity-feed');
+        const activityRefreshStatus = document.getElementById('activity-refresh-status');
+        if (activityFeed) {
+            const activities = [
+                { user: 'Arjun', action: 'launched DOGEAI', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d' },
+                { user: 'Mia', action: 'earned 20 CDK', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704e' },
+                { user: 'Ravi', action: 'invited a new member', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704f' },
+                { user: 'Sana', action: 'bought PEPE', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704g' },
+                { user: 'Noah', action: 'launched MOONBULL', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704h' },
+                { user: 'Ava', action: 'earned 10 CDK', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704i' },
+            ];
+
+            let emittedActivityCount = 0;
+            const feedItems = [];
+
+            const timeAgo = (ts) => {
+                const diff = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+                return `${diff} seconds ago`;
+            };
+
+            const feedObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('animate-fade-in');
+                    feedObserver.unobserve(entry.target);
+                });
+            }, { root: activityFeed, rootMargin: '80px' });
+
+            const renderInFeedAd = () => {
+                const adEl = document.createElement('div');
+                adEl.className = 'ad-lazy lazy-feed-item flex items-center justify-center p-3 border-b border-white/10 rounded-xl bg-white/5 text-xs text-gray-400';
+                adEl.dataset.adSlot = 'REPLACE_WITH_SLOT';
+                adEl.dataset.adText = 'Sponsored';
+                adEl.textContent = 'Sponsored';
+                activityFeed.prepend(adEl);
+                feedObserver.observe(adEl);
+                if (window.observeLazyAdElement) {
+                    window.observeLazyAdElement(adEl);
+                }
+            };
+
+            const renderActivity = (activity) => {
+                const activityEl = document.createElement('div');
+                activityEl.className = 'lazy-feed-item flex items-center gap-4 p-3 border-b border-white/10';
+                const ts = Date.now();
+                feedItems.unshift({ ts, node: activityEl });
+                activityEl.innerHTML = `
+                    <img loading="lazy" src="${activity.avatar}" alt="${activity.user}" class="w-10 h-10 rounded-full">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-semibold text-white truncate">${activity.user} ${activity.action}</p>
+                        <p class="text-xs text-gray-400 activity-time">${timeAgo(ts)}</p>
+                    </div>
+                `;
+                activityFeed.prepend(activityEl);
+                feedObserver.observe(activityEl);
+                emittedActivityCount += 1;
+                if (emittedActivityCount % 6 === 0) {
+                    renderInFeedAd();
+                }
+                if (activityFeed.children.length > 10) {
+                    activityFeed.lastChild.remove();
+                }
+            };
+
+            let activityIndex = 0;
+            setInterval(() => {
+                renderActivity(activities[activityIndex]);
+                activityIndex = (activityIndex + 1) % activities.length;
+                if (activityRefreshStatus) activityRefreshStatus.textContent = `Activity feed updating... ${new Date().toLocaleTimeString()}`;
+            }, 5000);
+
+            setInterval(() => {
+                feedItems.forEach((item) => {
+                    const timeEl = item.node.querySelector('.activity-time');
+                    if (timeEl) timeEl.textContent = timeAgo(item.ts);
+                });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
