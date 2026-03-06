@@ -18,7 +18,13 @@ app.get("/", (req, res) => {
 const tokenPageViews = new Map();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(helmet());
 app.use(express.static('frontend'));
 app.set('trust proxy', 1); // Trust first proxy for IP logging
@@ -315,14 +321,14 @@ app.post("/api/tokens/launch", authMiddleware, async (req, res) => {
 
     const rpcUrl = process.env.BSC_RPC_URL;
     const contractAddress = process.env.LAUNCHPAD_CONTRACT_ADDRESS;
-    const privateKey = process.env.LAUNCHPAD_DEPLOYER_PRIVATE_KEY;
+    const privateKey = process.env.PRIVATE_KEY;
 
     if (!rpcUrl || !contractAddress || !privateKey) {
       return res.status(500).json({ error: "Launchpad configuration missing" });
     }
 
-    const provider = new ethers.JsonRpcProvider(rpcUrl);
-    const signer = new ethers.Wallet(privateKey, provider);
+    const provider = new ethers.JsonRpcProvider(process.env.BSC_RPC_URL);
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
     const launchpadAbi = [
       "function launchFeeWei() view returns (uint256)",
@@ -330,7 +336,11 @@ app.post("/api/tokens/launch", authMiddleware, async (req, res) => {
       "event TokenLaunched(address indexed creator,address indexed token,string name,string symbol,uint256 supply,uint256 taxPercentage,address taxWallet,uint256 feePaidWei)",
     ];
 
-    const launchpad = new ethers.Contract(contractAddress, launchpadAbi, signer);
+    const launchpad = new ethers.Contract(
+      process.env.LAUNCHPAD_CONTRACT_ADDRESS,
+      launchpadAbi,
+      wallet
+    );
     const fee = await launchpad.launchFeeWei();
 
     const tx = await launchpad.launchToken(name, symbol, supply, taxPercentage ?? 0, { value: fee });
@@ -356,8 +366,8 @@ app.post("/api/tokens/launch", authMiddleware, async (req, res) => {
 
     return res.json({ tokenAddress, txHash: receipt.hash });
   } catch (err) {
-    console.error("Token launch error", err);
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("Token launch error:", err);
+    return res.status(500).json({ error: err.message });
   }
 });
 

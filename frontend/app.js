@@ -533,13 +533,22 @@ async function apiFetch(endpoint, options = {}) {
     body: body ? JSON.stringify(body) : null,
   });
 
-  const data = await response.json();
+  const raw = await response.text();
+  let data;
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch {
+    data = { error: raw || "Unexpected response from server" };
+  }
 
   if (!response.ok) {
     if (response.status === 401 && state.token) {
       handleLogout(); // Token is invalid or expired
     }
-    throw data;
+    const error = new Error(data?.error || data?.message || `HTTP ${response.status}`);
+    error.response = { data };
+    error.status = response.status;
+    throw error;
   }
   return data;
 }
@@ -1706,7 +1715,10 @@ async function handleLaunch(event) {
     previewLogo.innerHTML = "R";
     updatePreview();
   } catch (error) {
-    setStatus(getReadableError(error) || error.error || "An unknown error occurred during launch.");
+    console.error("Launch error:", error);
+    const msg = error?.response?.data?.error || error?.response?.data || error?.message || "Unknown error";
+    alert(typeof msg === "string" ? msg : JSON.stringify(msg));
+    setStatus(getReadableError(error) || "An unknown error occurred during launch.");
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = original;
