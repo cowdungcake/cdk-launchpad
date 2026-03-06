@@ -324,7 +324,15 @@ app.post("/api/tokens/launch", authMiddleware, async (req, res) => {
     const privateKey = process.env.PRIVATE_KEY;
 
     if (!rpcUrl || !contractAddress || !privateKey) {
-      return res.status(500).json({ error: "Launchpad configuration missing" });
+      const missing = [
+        !rpcUrl ? "BSC_RPC_URL" : null,
+        !contractAddress ? "LAUNCHPAD_CONTRACT_ADDRESS" : null,
+        !privateKey ? "PRIVATE_KEY" : null,
+      ].filter(Boolean);
+      return res.status(500).json({
+        error: "Launchpad configuration missing",
+        missing,
+      });
     }
 
     const provider = new ethers.JsonRpcProvider(process.env.BSC_RPC_URL);
